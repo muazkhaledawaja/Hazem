@@ -20,7 +20,7 @@ export const NAV_LINKS = [
   "About",
   "Skills",
   "Experience",
-  "Showreel",
+  "Portfolio",
   "Work",
   "Contact",
 ] as const;

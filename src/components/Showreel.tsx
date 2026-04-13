@@ -88,11 +88,11 @@ export default function Showreel({ videos }: Props) {
   const rest = videos.filter((v) => v.id !== featured.id);
 
   return (
-    <section id="showreel" className="py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.bg }}>
+    <section id="portfolio" className="py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.bg }}>
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="Video Work"
-          title={<>Show<span style={{ color: P.frozen }}>reel</span></>}
+          title={<>Port<span style={{ color: P.frozen }}>folio</span></>}
           subtitle="Promotional edits, documentaries, and brand content — see the work in motion."
         />
 
