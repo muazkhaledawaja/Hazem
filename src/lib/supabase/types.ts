@@ -4,6 +4,7 @@ export type Project = {
   category: string;
   description: string;
   accent: string;
+  image_url: string | null;
   sort_order: number;
   created_at: string;
   updated_at: string;

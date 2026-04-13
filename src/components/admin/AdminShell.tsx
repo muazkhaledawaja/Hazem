@@ -3,7 +3,7 @@ import { palette as P } from "@/lib/constants";
 
 const NAV = [
   { href: "/admin", label: "Overview" },
-  { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/projects", label: "Credentials" },
   { href: "/admin/experience", label: "Experience" },
   { href: "/admin/videos", label: "Videos" },
   { href: "/admin/skills", label: "Skills" },

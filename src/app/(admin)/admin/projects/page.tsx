@@ -13,15 +13,15 @@ export default async function ProjectsPage() {
     <>
       <PageHeader
         label="Portfolio"
-        title="Projects"
-        subtitle="Cards shown in the Work section of the public site."
-        action={{ href: "/admin/projects/new", label: "New project" }}
+        title="Credentials"
+        subtitle="Certificates and internships shown in the public Work section."
+        action={{ href: "/admin/projects/new", label: "New entry" }}
       />
 
       {projects.length === 0 ? (
         <Glass className="p-8 text-center">
           <p className="text-sm" style={{ color: P.muted }}>
-            No projects yet. Add your first one.
+            No entries yet. Add your first certificate or internship.
           </p>
         </Glass>
       ) : (
@@ -29,13 +29,27 @@ export default async function ProjectsPage() {
           {projects.map((project) => (
             <Glass key={project.id} className="p-5 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div
-                  className="w-12 h-12 rounded-xl shrink-0"
-                  style={{
-                    background: `linear-gradient(135deg, ${project.accent}, ${P.deep})`,
-                    border: `1px solid ${project.accent}40`,
-                  }}
-                />
+                {project.image_url ? (
+                  <div
+                    className="w-16 h-16 rounded-xl shrink-0 overflow-hidden"
+                    style={{ border: `1px solid ${project.accent}40` }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={project.image_url}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="w-16 h-16 rounded-xl shrink-0"
+                    style={{
+                      background: `linear-gradient(135deg, ${project.accent}, ${P.deep})`,
+                      border: `1px solid ${project.accent}40`,
+                    }}
+                  />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
                     <span

@@ -7,7 +7,7 @@ import Glass from "@/components/ui/Glass";
 import SectionHeader from "@/components/ui/SectionHeader";
 import type { Project } from "@/lib/supabase/types";
 
-const CATEGORIES = ["All", "Filmmaking", "Advertising", "University Projects"] as const;
+const CATEGORIES = ["All", "Certificates", "Internships"] as const;
 
 type Props = { projects: Project[] };
 
@@ -20,7 +20,7 @@ export default function Work({ projects }: Props) {
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="Portfolio"
-          title={<>Featured <span style={{ color: P.frozen }}>Work</span></>}
+          title={<>Certificates & <span style={{ color: P.frozen }}>Internships</span></>}
         />
 
         {/* Filter pills */}
@@ -52,20 +52,19 @@ export default function Work({ projects }: Props) {
                   className="aspect-[16/10] relative"
                   style={{ background: `linear-gradient(145deg, ${project.accent}10, ${P.bg})` }}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div
-                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                      style={{ background: `${project.accent}12`, border: `1px solid ${project.accent}25` }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill={`${project.accent}60`}>
-                        <polygon points="8 5 19 12 8 19" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                  {project.image_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={project.image_url}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
                     <span
-                      className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] uppercase tracking-[0.15em] font-medium"
-                      style={{ background: `${project.accent}12`, color: project.accent, border: `1px solid ${project.accent}20` }}
+                      className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] uppercase tracking-[0.15em] font-medium backdrop-blur-sm"
+                      style={{ background: `${project.accent}25`, color: project.accent, border: `1px solid ${project.accent}40` }}
                     >
                       {project.category}
                     </span>
