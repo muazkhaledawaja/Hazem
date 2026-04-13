@@ -188,7 +188,7 @@ export default function Hero() {
           style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s ease 1.4s" }}
         >
           <a
-            href="#showreel"
+            href="#portfolio"
             className="group inline-flex items-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold transition-all duration-500 hover:scale-105 w-full sm:w-auto justify-center"
             style={{
               background: `linear-gradient(135deg, ${P.pacific}, ${P.fresh})`,
@@ -196,7 +196,7 @@ export default function Hero() {
               boxShadow: `0 8px 32px ${P.pacific}25`,
             }}
           >
-            Watch Showreel
+            Watch Portfolio
             <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-1">
               <path d="M5 1l6 6-6 6" />
             </svg>
