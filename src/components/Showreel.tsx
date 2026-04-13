@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { palette as P, VIDEOS } from "@/lib/constants";
+import { palette as P } from "@/lib/constants";
 import Reveal from "@/components/ui/Reveal";
-import Glass from "@/components/ui/Glass";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { Video } from "@/lib/supabase/types";
 
 interface VideoPlaceholderProps {
-  video: (typeof VIDEOS)[number];
+  video: Video;
   isFeatured?: boolean;
   playing: boolean;
   onToggle: () => void;
@@ -31,15 +31,11 @@ function VideoPlaceholder({ video, isFeatured = false, playing, onToggle }: Vide
         />
       ) : (
         <>
-          {/* Gradient overlay */}
           <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${P.yale}20 0%, transparent 40%, ${P.pacific}08 100%)` }} />
-          {/* Scanlines */}
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 3px)" }} />
-          {/* Film strips */}
           <div className="absolute top-0 bottom-0 left-0 w-6 sm:w-8 opacity-[0.06]" style={{ background: `repeating-linear-gradient(180deg, ${P.pacific} 0px, ${P.pacific} 4px, transparent 4px, transparent 12px)` }} />
           <div className="absolute top-0 bottom-0 right-0 w-6 sm:w-8 opacity-[0.06]" style={{ background: `repeating-linear-gradient(180deg, ${P.pacific} 0px, ${P.pacific} 4px, transparent 4px, transparent 12px)` }} />
 
-          {/* Play button */}
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div
               className="flex items-center justify-center rounded-full transition-all duration-500 group-hover:scale-110"
@@ -58,7 +54,6 @@ function VideoPlaceholder({ video, isFeatured = false, playing, onToggle }: Vide
             </div>
           </div>
 
-          {/* Info bar */}
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 z-10" style={{ background: `linear-gradient(to top, ${P.bg}ee, transparent)` }}>
             <h4 className={`font-heading font-bold mb-1 ${isFeatured ? "text-base sm:text-lg" : "text-sm"}`} style={{ color: P.pale }}>
               {video.title}
@@ -68,7 +63,6 @@ function VideoPlaceholder({ video, isFeatured = false, playing, onToggle }: Vide
             </p>
           </div>
 
-          {/* Badge */}
           <div className="absolute top-4 right-4 z-10">
             <span
               className="px-3 py-1.5 rounded-full text-[9px] uppercase tracking-[0.15em] font-medium"
@@ -83,8 +77,15 @@ function VideoPlaceholder({ video, isFeatured = false, playing, onToggle }: Vide
   );
 }
 
-export default function Showreel() {
+type Props = { videos: Video[] };
+
+export default function Showreel({ videos }: Props) {
   const [playing, setPlaying] = useState<string | null>(null);
+
+  if (videos.length === 0) return null;
+
+  const featured = videos.find((v) => v.featured) ?? videos[0];
+  const rest = videos.filter((v) => v.id !== featured.id);
 
   return (
     <section id="showreel" className="py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.bg }}>
@@ -95,21 +96,19 @@ export default function Showreel() {
           subtitle="Promotional edits, documentaries, and brand content — see the work in motion."
         />
 
-        {/* Featured */}
         <Reveal delay={0.15}>
           <div className="mb-6">
             <VideoPlaceholder
-              video={VIDEOS[0]}
+              video={featured}
               isFeatured
-              playing={playing === VIDEOS[0].id}
-              onToggle={() => setPlaying(playing === VIDEOS[0].id ? null : VIDEOS[0].id)}
+              playing={playing === featured.id}
+              onToggle={() => setPlaying(playing === featured.id ? null : featured.id)}
             />
           </div>
         </Reveal>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {VIDEOS.slice(1).map((video, i) => (
+          {rest.map((video, i) => (
             <Reveal key={video.id} delay={0.1 + i * 0.08}>
               <VideoPlaceholder
                 video={video}
@@ -119,24 +118,6 @@ export default function Showreel() {
             </Reveal>
           ))}
         </div>
-
-        {/* Tip */}
-        <Reveal delay={0.3}>
-          <div className="mt-10 sm:mt-14 text-center">
-            <Glass className="inline-block px-6 py-4">
-              <p className="text-xs" style={{ color: P.soft }}>
-                <span style={{ color: P.pacific }}>Tip:</span> Replace the{" "}
-                <code
-                  className="text-[11px] rounded px-1.5 py-0.5"
-                  style={{ color: P.frozen, background: `${P.pacific}12` }}
-                >
-                  embed: null
-                </code>{" "}
-                values in <code className="text-[11px] rounded px-1.5 py-0.5" style={{ color: P.frozen, background: `${P.pacific}12` }}>src/lib/constants.ts</code> with YouTube or Vimeo embed URLs.
-              </p>
-            </Glass>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

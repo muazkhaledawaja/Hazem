@@ -1,11 +1,14 @@
 "use client";
 
-import { palette as P, EXPERIENCE } from "@/lib/constants";
+import { palette as P } from "@/lib/constants";
 import Reveal from "@/components/ui/Reveal";
 import Glass from "@/components/ui/Glass";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { ExperienceRow } from "@/lib/supabase/types";
 
-export default function Experience() {
+type Props = { items: ExperienceRow[] };
+
+export default function Experience({ items }: Props) {
   return (
     <section id="experience" className="py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.deep }}>
       <div className="max-w-5xl mx-auto">
@@ -15,8 +18,8 @@ export default function Experience() {
         />
 
         <div className="space-y-5 sm:space-y-6 mt-14 sm:mt-20">
-          {EXPERIENCE.map((exp, i) => (
-            <Reveal key={i} delay={0.08 * i}>
+          {items.map((exp, i) => (
+            <Reveal key={exp.id} delay={0.08 * i}>
               <Glass className="p-0 group" glow>
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-0">
                   {/* Left — date & company */}

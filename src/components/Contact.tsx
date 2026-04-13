@@ -4,8 +4,13 @@ import { palette as P } from "@/lib/constants";
 import Reveal from "@/components/ui/Reveal";
 import Glass from "@/components/ui/Glass";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { ContactContent } from "@/lib/supabase/types";
 
-export default function Contact() {
+type Props = { content: ContactContent | null };
+
+export default function Contact({ content }: Props) {
+  if (!content) return null;
+
   return (
     <section id="contact" className="py-20 sm:py-32 px-5 sm:px-8 relative overflow-hidden" style={{ background: P.bg }}>
       <div className="absolute top-0 left-0 w-full h-px" style={{ background: `linear-gradient(90deg, transparent, ${P.border}, transparent)` }} />
@@ -22,13 +27,13 @@ export default function Contact() {
 
         <Reveal delay={0.1}>
           <p className="text-sm mb-10 sm:mb-14 mt-4" style={{ color: P.muted, fontWeight: 300 }}>
-            Open for collaborations in advertising, filmmaking, and brand consulting.
+            {content.blurb}
           </p>
         </Reveal>
 
         <Reveal delay={0.15}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10 sm:mb-12">
-            <a href="mailto:mohamedhazem69@gmail.com" className="block">
+            <a href={`mailto:${content.email}`} className="block">
               <Glass className="px-5 sm:px-6 py-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${P.pacific}12` }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={P.pacific} strokeWidth="1.5">
@@ -38,7 +43,7 @@ export default function Contact() {
                 </div>
                 <div className="text-left min-w-0">
                   <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: P.muted }}>Email</p>
-                  <p className="text-xs font-medium truncate" style={{ color: P.text }}>mohamedhazem69@gmail.com</p>
+                  <p className="text-xs font-medium truncate" style={{ color: P.text }}>{content.email}</p>
                 </div>
               </Glass>
             </a>
@@ -50,7 +55,7 @@ export default function Contact() {
               </div>
               <div className="text-left">
                 <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: P.muted }}>Phone</p>
-                <p className="text-xs font-medium" style={{ color: P.text }}>+20 110 008 9064</p>
+                <p className="text-xs font-medium" style={{ color: P.text }}>{content.phone}</p>
               </div>
             </Glass>
           </div>
@@ -58,7 +63,7 @@ export default function Contact() {
 
         <Reveal delay={0.2}>
           <a
-            href="https://www.linkedin.com/in/mohamed-hazem-914a60360/"
+            href={content.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-8 sm:px-10 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold transition-all duration-500 hover:scale-105"

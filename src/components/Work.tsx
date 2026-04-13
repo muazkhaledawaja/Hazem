@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { palette as P, PROJECTS } from "@/lib/constants";
+import { palette as P } from "@/lib/constants";
 import Reveal from "@/components/ui/Reveal";
 import Glass from "@/components/ui/Glass";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { Project } from "@/lib/supabase/types";
 
 const CATEGORIES = ["All", "Filmmaking", "Advertising", "University Projects"] as const;
 
-export default function Work() {
+type Props = { projects: Project[] };
+
+export default function Work({ projects }: Props) {
   const [active, setActive] = useState<string>("All");
-  const filtered = active === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === active);
+  const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
     <section id="work" className="py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.deep }}>
@@ -43,7 +46,7 @@ export default function Work() {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {filtered.map((project, i) => (
-            <Reveal key={project.title + active} delay={0.06 * i}>
+            <Reveal key={project.id + active} delay={0.06 * i}>
               <Glass className="overflow-hidden group cursor-pointer" glow>
                 <div
                   className="aspect-[16/10] relative"

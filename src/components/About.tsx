@@ -3,8 +3,13 @@
 import Image from "next/image";
 import { palette as P } from "@/lib/constants";
 import Reveal from "@/components/ui/Reveal";
+import type { AboutContent } from "@/lib/supabase/types";
 
-export default function About() {
+type Props = { content: AboutContent | null };
+
+export default function About({ content }: Props) {
+  if (!content) return null;
+
   return (
     <section id="about" className="relative py-20 sm:py-32 px-5 sm:px-8" style={{ background: P.deep }}>
       <div className="max-w-6xl mx-auto">
@@ -42,10 +47,10 @@ export default function About() {
                 }}
               >
                 <p className="text-[9px] sm:text-[10px] uppercase tracking-widest" style={{ color: P.pacific }}>
-                  BUE / LSBU
+                  {content.badgeTop}
                 </p>
                 <p className="text-[11px] sm:text-xs font-semibold mt-0.5" style={{ color: P.pale }}>
-                  Dual Degree
+                  {content.badgeBottom}
                 </p>
               </div>
             </div>
@@ -79,25 +84,18 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-sm mb-4" style={{ color: P.text, lineHeight: 2, fontWeight: 300 }}>
-                Driven and imaginative Mass Communication student specializing in advertising, filmmaking,
-                and brand development. Experienced in producing promotional content for real clients and
-                passionate about inspiring brands with fresh, strategic marketing ideas.
+                {content.bioPrimary}
               </p>
             </Reveal>
             <Reveal delay={0.25}>
               <p className="text-sm mb-8" style={{ color: P.muted, lineHeight: 2, fontWeight: 300 }}>
-                Adept at storytelling, video editing, and visual communication. Eager to grow in
-                advertisement directing, marketing, and brand consulting.
+                {content.bioSecondary}
               </p>
             </Reveal>
             <Reveal delay={0.3}>
               <div className="flex gap-8 sm:gap-12">
-                {[
-                  ["3+", "Projects"],
-                  ["2", "Clients"],
-                  ["2", "Internships"],
-                ].map(([num, label]) => (
-                  <div key={label}>
+                {content.stats.map((stat) => (
+                  <div key={stat.label}>
                     <p
                       className="text-2xl sm:text-3xl font-heading font-bold"
                       style={{
@@ -106,10 +104,10 @@ export default function About() {
                         WebkitTextFillColor: "transparent",
                       }}
                     >
-                      {num}
+                      {stat.value}
                     </p>
                     <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] mt-1" style={{ color: P.muted }}>
-                      {label}
+                      {stat.label}
                     </p>
                   </div>
                 ))}
