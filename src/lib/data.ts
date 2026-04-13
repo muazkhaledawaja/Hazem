@@ -2,6 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type {
   AboutContent,
   ContactContent,
+  CvRow,
   ExperienceRow,
   Project,
   SkillGroup,
@@ -60,4 +61,14 @@ export async function getAbout() {
 
 export async function getContact() {
   return getSiteContent<ContactContent>("contact");
+}
+
+export async function getCv(): Promise<CvRow | null> {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("cv")
+    .select("*")
+    .eq("id", 1)
+    .maybeSingle();
+  return (data ?? null) as CvRow | null;
 }

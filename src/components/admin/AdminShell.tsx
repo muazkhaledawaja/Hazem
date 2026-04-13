@@ -9,6 +9,7 @@ const NAV = [
   { href: "/admin/skills", label: "Skills" },
   { href: "/admin/about", label: "About" },
   { href: "/admin/contact", label: "Contact" },
+  { href: "/admin/cv", label: "CV" },
 ] as const;
 
 export default function AdminShell({

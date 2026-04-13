@@ -59,3 +59,10 @@ export type ContactContent = {
   linkedin: string;
   blurb: string;
 };
+
+export type CvRow = {
+  id: number;
+  filename: string;
+  file_url: string;
+  uploaded_at: string;
+};
